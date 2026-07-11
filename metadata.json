@@ -1,0 +1,6 @@
+{
+  "name": "Greater London Pest Control",
+  "description": "Professional, accredited, and safe pest control services across Greater London. Specialising in residential, commercial, and landlord properties inside the M25.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
