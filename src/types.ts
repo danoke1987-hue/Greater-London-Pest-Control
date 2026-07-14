@@ -191,8 +191,31 @@ export interface PostcodeDistrict {
   neighbouringOutwardDistricts: string[];
   latitude: number;
   longitude: number;
-  publicationStatus: 'draft' | 'published';
+  publicationStatus: 'draft' | 'published' | 'awaiting-data' | 'awaiting-review' | 'archived';
   indexable: boolean;
+  
+  // Enriched Local SEO fields
+  postcodePrefix?: string; // e.g. "RM"
+  verified?: boolean;
+  qualityScore?: number; // 0 to 100
+  nearbyAreas?: string[];
+  relevantPests?: string[]; // pest slugs
+  relevantServices?: string[]; // service slugs
+  localCoverageNotes?: string;
+  residentialPropertyContext?: string;
+  commercialPropertyContext?: string;
+  localPestContext?: string;
+  technicianNotes?: string;
+  genuineCaseStudyIds?: string[];
+  genuineReviewIds?: string[];
+  genuinePhotoIds?: string[];
+  dateCreated?: string;
+  dateReviewed?: string;
+  reviewedBy?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalUrl?: string;
+  faqs?: FAQ[];
 }
 
 export interface Industry {

@@ -4,7 +4,24 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
+// Import datasets from the application for dynamic sitemap generation
+import { 
+  postcodesList, 
+  locationsList, 
+  boroughsList, 
+  activePostcodes, 
+  activeLocations, 
+  activeBoroughs,
+  calculatePostcodeQualityScore,
+  getPostcodePublishingDetails
+} from "./src/data/locations";
+import { pestsList } from "./src/data/pests";
+import { servicesList } from "./src/data/services";
+import { adviceArticles, caseStudiesList } from "./src/data/editorial";
+
 dotenv.config();
+
+const DOMAIN = "greaterlondonpestcontrol.co.uk";
 
 async function startServer() {
   const app = express();
@@ -12,7 +29,170 @@ async function startServer() {
 
   app.use(express.json());
 
-  // API route for structural pest control ChatBot Q&A
+  // 1. Dynamic 301 Redirect Engine
+  const redirects = [
+    { source: "/index.php", destination: "/", statusCode: 301 },
+    { source: "/about-us", destination: "/about", statusCode: 301 },
+    { source: "/contact-us", destination: "/contact", statusCode: 301 },
+    { source: "/services", destination: "/areas", statusCode: 301 },
+    { source: "/postcode-list", destination: "/areas", statusCode: 301 },
+  ];
+
+  app.use((req, res, next) => {
+    const match = redirects.find(r => r.source.toLowerCase() === req.path.toLowerCase());
+    if (match) {
+      console.log(`[301 Redirect] ${req.path} -> ${match.destination}`);
+      return res.redirect(match.statusCode, match.destination);
+    }
+    next();
+  });
+
+  // 2. Dynamic Robots.txt Endpoint
+  app.get("/robots.txt", (req, res) => {
+    res.type("text/plain");
+    res.send(`User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://${DOMAIN}/sitemap-index.xml
+`);
+  });
+
+  // Helper to wrap sitemap urls in standard xml
+  function buildSitemapXml(urls: string[]): string {
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(url => `  <url>
+    <loc>${url}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join("\n")}
+</urlset>`;
+  }
+
+  // 3. Dynamic Sitemap Index Endpoint
+  app.get("/sitemap-index.xml", (req, res) => {
+    res.type("application/xml");
+    res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://${DOMAIN}/sitemap-core.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-services.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-pests.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-boroughs.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-areas.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-postcodes.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-advice.xml</loc></sitemap>
+  <sitemap><loc>https://${DOMAIN}/sitemap-case-studies.xml</loc></sitemap>
+</sitemapindex>`);
+  });
+
+  // 4. Individual Sitemap Subcategories
+  app.get("/sitemap-core.xml", (req, res) => {
+    const urls = [
+      `https://${DOMAIN}/`,
+      `https://${DOMAIN}/about`,
+      `https://${DOMAIN}/contact`,
+      `https://${DOMAIN}/areas`,
+      `https://${DOMAIN}/request-a-quote`
+    ];
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-services.xml", (req, res) => {
+    const urls = servicesList
+      .filter(s => s.status === 'active' && s.indexability)
+      .map(s => `https://${DOMAIN}/services/${s.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-pests.xml", (req, res) => {
+    const urls = pestsList
+      .filter(p => p.status === 'active' && p.indexability)
+      .map(p => `https://${DOMAIN}/pests/${p.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-boroughs.xml", (req, res) => {
+    const urls = boroughsList
+      .filter(b => b.isServed)
+      .map(b => `https://${DOMAIN}/boroughs/${b.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-areas.xml", (req, res) => {
+    const urls = locationsList
+      .filter(l => l.isServed && l.editorialQuality.indexable && l.editorialQuality.publicationStatus === "published")
+      .map(l => `https://${DOMAIN}/areas/${l.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-postcodes.xml", (req, res) => {
+    // Quality Gate: Only include postcodes with active service, verified completed, and score >= 85
+    const urls = postcodesList
+      .filter(p => {
+        const details = getPostcodePublishingDetails(p);
+        return details.isIndexable && details.status === 'published';
+      })
+      .map(p => `https://${DOMAIN}/postcodes/${p.outwardCode.toLowerCase()}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-advice.xml", (req, res) => {
+    const urls = adviceArticles
+      .filter(a => a.status === 'active' && a.indexability)
+      .map(a => `https://${DOMAIN}/advice/${a.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  app.get("/sitemap-case-studies.xml", (req, res) => {
+    const urls = caseStudiesList
+      .map(cs => `https://${DOMAIN}/case-studies/${cs.slug}`);
+    res.type("application/xml").send(buildSitemapXml(urls));
+  });
+
+  // 5. Admin API endpoint for Live Quality Scoring reports and Diagnostic telemetry
+  app.get("/api/seo-stats", (req, res) => {
+    try {
+      const stats = postcodesList.map(p => {
+        const details = getPostcodePublishingDetails(p);
+        const score = calculatePostcodeQualityScore(p);
+        return {
+          outwardCode: p.outwardCode,
+          postcodeArea: p.postcodeArea,
+          borough: p.relevantBorough,
+          served: p.isActivelyServed,
+          verified: p.verified,
+          rawScore: score,
+          gateStatus: details.status,
+          isIndexable: details.isIndexable,
+          warnings: details.warnings
+        };
+      });
+
+      const total = stats.length;
+      const indexableCount = stats.filter(s => s.isIndexable).length;
+      const draftCount = stats.filter(s => s.gateStatus === 'draft' || s.gateStatus === 'awaiting-data').length;
+      const noindexCount = stats.filter(s => s.gateStatus === 'published' && !s.isIndexable).length;
+      const avgScore = Math.round(stats.reduce((acc, curr) => acc + curr.rawScore, 0) / total);
+
+      return res.json({
+        summary: {
+          totalPostcodes: total,
+          indexablePostcodes: indexableCount,
+          noindexPostcodes: noindexCount,
+          draftPostcodes: draftCount,
+          averageQualityScore: avgScore,
+        },
+        records: stats
+      });
+    } catch (err: any) {
+      return res.status(500).json({ error: err.message });
+    }
+  });
+
+  // 6. API route for structural pest control ChatBot Q&A
   app.post("/api/chat", async (req, res) => {
     try {
       const { messages } = req.body;
@@ -27,7 +207,6 @@ async function startServer() {
         });
       }
 
-      // Lazy initialize to avoid crashing on start if key is missing
       const ai = new GoogleGenAI({
         apiKey,
         httpOptions: {
@@ -37,9 +216,8 @@ async function startServer() {
         },
       });
 
-      // Complete knowledge system instructions
       const systemInstruction = `
-You are the official certified AI Assistant of Greater London Pest Control (GLPC), a premium, BPCA-accredited structural pest eradication and physical exclusion service operating across all 32 boroughs of Greater London inside the M25.
+You are the official certified AI Assistant of Greater London Pest Control (GLPC), a premium, BPCA-accredited structural pest eradication and physical exclusion service operating across all boroughs of Greater London inside the M25.
 
 YOUR IDENTITY:
 - You are an expert field biologist AI assistant representing GLPC.
@@ -58,9 +236,8 @@ PEST SPECIFICS (KNOWLEDGE BASE):
 - Rats & Mice: Highly destructive, gnaw structural wires (fire risk), spread Weil's disease/Leptospirosis. We perform dynamic tracing, seal pipe/sewer entry paths with heavy-gauge steel plating, and execute multi-phase trapping.
 - Bed Bugs: Heat treatments or targeted chemical sprays. Full room preparation guidance provided.
 - Cockroaches: Spread salmonella/gastroenteritis. We use professional gel baits and sanitation audits.
-- Wasps & Hornets: High-grade safety gear, same-day nest eradication.
-- Pigeons & Gulls: Heavy guano damage. Netting, tensioned wire systems, spikes, and visual fire-gels.
-- Wildlife & Foxes: Compliant humane deterrence.
+- Wasps & Hornets: Same-day nest eradication.
+- Pigeons & Gulls: Netting, tensioned wire systems, spikes, and visual fire-gels.
 - Honey Bees (Apis mellifera): CRITICAL ENVIRONMENTAL POLICY. Honey bees are vital pollinators. GLPC does NOT destroy or exterminate honey bee nests. If a client has a honey bee swarm or active hive, advise them to contact the British Beekeepers Association (BBKA) or local registered swarm collectors for safe live swarm extraction and relocation.
 
 PRICING & SITE VISITS:
@@ -71,19 +248,17 @@ PRICING & SITE VISITS:
 TONE & CONSTRAINTS:
 - Scientific, empathetic, reassuring, professional.
 - Use clean formatting, bullet points, and concise text.
-- Never mention internal database models, system files, or technical code (like Express, React, Vite, server.ts, process.env).
+- Never mention internal database models, system files, or technical code.
 - Always speak to customers as a direct human-friendly representative of GLPC.
 `;
 
-      // Format the conversation for the @google/genai SDK generateContent
-      // Map { role, content } to { role: 'user' | 'model', parts: [{ text: string }] }
       const contents = messages.map((m) => ({
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: m.content }],
       }));
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
+        model: "gemini-2.5-flash",
         contents,
         config: {
           systemInstruction,

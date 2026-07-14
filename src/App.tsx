@@ -27,6 +27,7 @@ import HowItWorksView from './views/HowItWorksView';
 import CaseStudiesView from './views/CaseStudiesView';
 import AdviceView from './views/AdviceView';
 import LegalView from './views/LegalView';
+import AdminSeoView from './views/AdminSeoView';
 
 function AppContent() {
   const { pathname } = useRouter();
@@ -41,6 +42,7 @@ function AppContent() {
     if (pathname === '/how-it-works') return <HowItWorksView />;
     if (pathname === '/case-studies') return <CaseStudiesView />;
     if (pathname === '/advice') return <AdviceView />;
+    if (pathname === '/admin') return <AdminSeoView />;
 
     // Sectors
     if (pathname === '/residential-pest-control') return <SectorView sector="residential" />;

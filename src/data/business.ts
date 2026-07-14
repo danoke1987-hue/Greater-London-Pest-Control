@@ -166,3 +166,6 @@ export const globalFAQs: FAQ[] = [
     answer: "Yes. Our quote form and technician visits are designed to identify pests based on signs, droppings, and damage patterns. You can upload clear photographs of the damage, droppings, or the pests themselves via our quote form, and our BPCA surveyors will identify them free of charge."
   }
 ];
+
+export const clientReviews = customerReviews;
+

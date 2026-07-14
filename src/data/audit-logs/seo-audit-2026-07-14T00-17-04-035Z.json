@@ -1,0 +1,246 @@
+{
+  "timestamp": "2026-07-14T00:17:04.036Z",
+  "summary": {
+    "totalIssues": 25,
+    "errors": 0,
+    "warnings": 25,
+    "infos": 0,
+    "activeUrlsCount": 78,
+    "totalImagesChecked": 1,
+    "missingAltsCount": 0,
+    "emptyAltsCount": 0,
+    "lazyLoadedImages": 0
+  },
+  "activeUrls": [
+    "/",
+    "/about",
+    "/contact",
+    "/areas",
+    "/request-a-quote",
+    "/services/rat-control",
+    "/services/mouse-control",
+    "/services/bed-bug-treatment",
+    "/services/wasp-control",
+    "/services/commercial-contracts",
+    "/services/emergency-pest-control",
+    "/pests/rats",
+    "/pests/mice",
+    "/pests/bed-bugs",
+    "/pests/cockroaches",
+    "/pests/wasps",
+    "/pests/hornets",
+    "/pests/ants",
+    "/pests/fleas",
+    "/pests/carpet-beetles",
+    "/pests/clothes-moths",
+    "/pests/stored-product-moths",
+    "/pests/flies",
+    "/pests/drain-flies",
+    "/pests/fruit-flies",
+    "/pests/cluster-flies",
+    "/pests/bluebottles",
+    "/pests/silverfish",
+    "/pests/firebrats",
+    "/pests/booklice",
+    "/pests/woodlice",
+    "/pests/spiders",
+    "/pests/beetles",
+    "/pests/furniture-beetles",
+    "/pests/squirrels",
+    "/pests/pigeons",
+    "/pests/other-pest-birds",
+    "/pests/foxes",
+    "/pests/mites",
+    "/pests/ticks",
+    "/pests/mosquitoes",
+    "/boroughs/bromley",
+    "/boroughs/camden",
+    "/boroughs/city-of-london",
+    "/boroughs/croydon",
+    "/boroughs/enfield",
+    "/boroughs/greenwich",
+    "/boroughs/hammersmith-and-fulham",
+    "/boroughs/harrow",
+    "/boroughs/havering",
+    "/boroughs/islington",
+    "/boroughs/kensington-and-chelsea",
+    "/boroughs/kingston-upon-thames",
+    "/boroughs/lambeth",
+    "/boroughs/redbridge",
+    "/boroughs/richmond-upon-thames",
+    "/boroughs/southwark",
+    "/boroughs/sutton",
+    "/boroughs/tower-hamlets",
+    "/boroughs/wandsworth",
+    "/boroughs/westminster",
+    "/areas/london-bridge",
+    "/areas/hampstead",
+    "/postcodes/rm1",
+    "/postcodes/rm2",
+    "/postcodes/se1",
+    "/postcodes/nw3",
+    "/postcodes/sw6",
+    "/postcodes/br1",
+    "/postcodes/tw1",
+    "/postcodes/e1",
+    "/postcodes/sw1a",
+    "/postcodes/se10",
+    "/advice/signs-of-rats",
+    "/advice/signs-of-bed-bugs",
+    "/advice/landlord-responsibility-pests",
+    "/case-studies/hampstead-loft-squirrel-proofing",
+    "/case-studies/london-bridge-restaurant-mouse-proofing"
+  ],
+  "issues": [
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode RM1",
+      "message": "No actively served Area locations (locationsList) list postcode RM1 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode RM2",
+      "message": "No actively served Area locations (locationsList) list postcode RM2 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode SW6",
+      "message": "No actively served Area locations (locationsList) list postcode SW6 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode BR1",
+      "message": "No actively served Area locations (locationsList) list postcode BR1 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode TW1",
+      "message": "No actively served Area locations (locationsList) list postcode TW1 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode E1",
+      "message": "No actively served Area locations (locationsList) list postcode E1 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode SW1A",
+      "message": "No actively served Area locations (locationsList) list postcode SW1A in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Logical Orphan",
+      "item": "Postcode SE10",
+      "message": "No actively served Area locations (locationsList) list postcode SE10 in their postcodeDistricts."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode RM1",
+      "message": "Total words on page is 145, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode RM2",
+      "message": "Total words on page is 118, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode SE1",
+      "message": "Total words on page is 111, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode NW3",
+      "message": "Total words on page is 98, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode SW6",
+      "message": "Total words on page is 100, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode BR1",
+      "message": "Total words on page is 92, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode TW1",
+      "message": "Total words on page is 90, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode E1",
+      "message": "Total words on page is 92, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode SW1A",
+      "message": "Total words on page is 84, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode SE10",
+      "message": "Total words on page is 88, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Indexation Status",
+      "item": "Postcode N1",
+      "message": "Actively served postcode is excluded from search indexing. Quality Score: 55. Reason: Missing human review / verification."
+    },
+    {
+      "type": "WARNING",
+      "category": "Indexation Status",
+      "item": "Postcode CR0",
+      "message": "Actively served postcode is excluded from search indexing. Quality Score: 81. Reason: Quality score (81) is between 70-84 - forced noindex."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode CR0",
+      "message": "Total words on page is 78, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Indexation Status",
+      "item": "Postcode HA1",
+      "message": "Actively served postcode is excluded from search indexing. Quality Score: 78. Reason: Quality score (78) is between 70-84 - forced noindex."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode HA1",
+      "message": "Total words on page is 67, which constitutes thin content (< 200 words)."
+    },
+    {
+      "type": "WARNING",
+      "category": "Indexation Status",
+      "item": "Postcode IG1",
+      "message": "Actively served postcode is excluded from search indexing. Quality Score: 78. Reason: Quality score (78) is between 70-84 - forced noindex."
+    },
+    {
+      "type": "WARNING",
+      "category": "Thin Content",
+      "item": "Postcode IG1",
+      "message": "Total words on page is 60, which constitutes thin content (< 200 words)."
+    }
+  ]
+}
