@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileStickyBar from './components/MobileStickyBar';
 import ChatBot from './components/ChatBot';
+import { Analytics } from '@vercel/analytics/react';
 
 // Import views
 import HomeView from './views/HomeView';
@@ -115,6 +116,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between text-gray-900 font-sans antialiased selection:bg-emerald-600 selection:text-white">
+      <Analytics />
       
       {/* 1. Accessible Skip Link */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-emerald-600 focus:text-white focus:px-4 focus:py-2.5 focus:rounded-lg focus:font-bold focus:shadow-lg focus:z-50">
