@@ -62,13 +62,15 @@ async function runSeoAudit() {
   // --- 1. GATHER ALL ACTIVE/INDEXABLE URLS ---
   const activeServiceUrls = servicesList.filter(s => s.status === 'active' && s.indexability).map(s => `/services/${s.slug}`);
   const activePestUrls = pestsList.filter(p => p.status === 'active' && p.indexability).map(p => `/pests/${p.slug}`);
-  const activeBoroughUrls = boroughsList.filter(b => b.isServed).map(b => `/boroughs/${b.slug}`);
-  const activeAreaUrls = locationsList.filter(l => l.isServed && l.editorialQuality.indexable && l.editorialQuality.publicationStatus === "published").map(l => `/areas/${l.slug}`);
+  const activeBoroughUrls = boroughsList.filter(b => b.isServed).map(b => `/areas/${b.slug}`);
+  const activeAreaUrls = locationsList.filter(l => l.isServed && l.editorialQuality.indexable && l.editorialQuality.publicationStatus === "published").map(l => `/areas/${l.boroughSlug}/${l.slug}`);
   
   const activePostcodeUrls = postcodesList.filter(p => {
     const details = getPostcodePublishingDetails(p);
     return details.isIndexable && details.status === 'published';
   }).map(p => `/postcodes/${p.outwardCode.toLowerCase()}`);
+
+  const activePostcodePrefixes = Array.from(new Set(postcodesList.map(p => `/postcodes/${p.postcodePrefix.toLowerCase()}`)));
   
   const activeAdviceUrls = adviceArticles.filter(a => a.status === 'active' && a.indexability).map(a => `/advice/${a.slug}`);
   const activeCaseStudyUrls = caseStudiesList.map(cs => `/case-studies/${cs.slug}`);
@@ -80,6 +82,7 @@ async function runSeoAudit() {
     ...activeBoroughUrls,
     ...activeAreaUrls,
     ...activePostcodeUrls,
+    ...activePostcodePrefixes,
     ...activeAdviceUrls,
     ...activeCaseStudyUrls
   ];

@@ -85,6 +85,14 @@ function AppContent() {
       const slug = pathname.substring('/boroughs/'.length);
       return <BoroughDetailView slug={slug} />;
     }
+    if (pathname.startsWith('/areas/')) {
+      const parts = pathname.substring('/areas/'.length).split('/').filter(Boolean);
+      if (parts.length === 1) {
+        return <BoroughDetailView slug={parts[0]} />;
+      } else if (parts.length === 2) {
+        return <LocationDetailView slug={parts[1]} />;
+      }
+    }
     if (pathname.startsWith('/postcodes/')) {
       const slug = pathname.substring('/postcodes/'.length);
       return <PostcodeDetailView outwardCode={slug} />;

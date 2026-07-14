@@ -150,6 +150,54 @@ export const postcodesList: PostcodeDistrict[] = [
     ]
   },
   {
+    outwardCode: "RM3",
+    postcodePrefix: "RM",
+    postcodeArea: "Harold Wood, Harold Hill & Noak Hill",
+    mainPostTown: "Romford",
+    relevantBorough: "havering",
+    broadLondonRegion: "east-london",
+    isWhollyInsideM25: true,
+    isPartlyInsideM25: false,
+    isActivelyServed: true,
+    verified: true,
+    reviewedBy: "Marcus Thorne",
+    dateCreated: "2026-06-01",
+    dateReviewed: "2026-07-10",
+    publicationStatus: "published",
+    indexable: true,
+    serviceLimitations: "None. Direct, rapid coverage from our Romford depot.",
+    neighbouringOutwardDistricts: ["RM1", "RM2", "RM4", "CM14"],
+    latitude: 51.5997,
+    longitude: 0.2311,
+    nearbyAreas: ["Harold Wood", "Harold Hill", "Noak Hill"],
+    relevantPests: ["rats", "mice", "wasps", "squirrels", "cockroaches"],
+    relevantServices: ["residential-pest-control", "rodent-proofing", "emergency-pest-control"],
+    localCoverageNotes: "Greater London Pest Control provides top-tier, BPCA-certified pest eradication and exclusion across Harold Wood and Harold Hill in RM3. Stationed right in Havering, our emergency teams provide fast, professional care within hours of booking.",
+    residentialPropertyContext: "Suburban homes and housing developments around Harold Wood regularly encounter house mouse activity in floorboards and wall voids. We seal utility entries with copper mesh to ensure a pest-free home.",
+    commercialPropertyContext: "Industrial estates, shipping warehouses, and local retail outlets around RM3 rely on our custom commercial contract schemes to preserve hygiene standards.",
+    localPestContext: "Sewer rat movements and garden squirrel infestations are prominent in the leafy suburbs of Harold Hill. We deploy secure tamper-proof bait blocks and high-reach wasp nest treatments.",
+    technicianNotes: "Great parking around RM3 residential areas allows our specialists to deploy full heat-treatment setups easily. Morning slots are recommended for swift residential visits.",
+    genuineCaseStudyIds: ["cs-romford-sewer-rats"],
+    genuineReviewIds: ["rev-romford-01"],
+    metaTitle: "Pest Control RM3 | Harold Wood & Harold Hill Exterminators",
+    metaDescription: "Accredited pest control in Harold Wood & Harold Hill RM3. Same-day extermination for rats, mice, wasps, and bed bugs. 100% eradication warranty. Book now.",
+    canonicalUrl: "https://greaterlondonpestcontrol.co.uk/postcodes/rm3",
+    faqs: [
+      {
+        question: "How fast can you treat a wasp nest in Harold Hill?",
+        answer: "Our RM3 technicians offer guaranteed same-day wasp treatments, typically arriving within 2 hours of your call."
+      },
+      {
+        question: "Are your rodent control treatments pet-safe in RM3?",
+        answer: "Yes, all treatments utilize heavy locked, child and pet-proof baiting chambers that are securely tethered."
+      },
+      {
+        question: "Do you offer commercial pest surveys in Harold Wood?",
+        answer: "Yes, we provide free initial commercial site risk assessments and pest logs for local businesses."
+      }
+    ]
+  },
+  {
     outwardCode: "SE1",
     postcodePrefix: "SE",
     postcodeArea: "Southwark, Waterloo & Bermondsey",
@@ -821,6 +869,44 @@ export const locationsList: Location[] = [
       {
         question: "How do you treat squirrels in historic Hampstead lofts?",
         answer: "We use strictly humane, legally compliant spring trapping grids placed in lofts. Captured grey squirrels are humanely dispatched, after which we block eaves entries permanently using heavy steel weld-mesh."
+      }
+    ]
+  },
+  {
+    slug: "romford",
+    name: "Romford",
+    boroughSlug: "havering",
+    isServed: true,
+    regionSlug: "east-london",
+    postcodeDistricts: ["RM1", "RM2", "RM3"],
+    editorialQuality: {
+      isServed: true,
+      publicationStatus: "published",
+      indexable: true,
+      localIntroductionVerified: true,
+      localPestObservationsVerified: true,
+      localCaseStudiesCount: 1,
+      localReviewsCount: 1,
+      localImagesCount: 1,
+      localTechnicianNotesCount: 1,
+      nearbyAreasVerified: true,
+      responseTimeVerified: true,
+      uniqueFaqCount: 2,
+      wordCount: 410,
+      lastReviewed: "2026-07-10",
+      reviewedBy: "Marcus Thorne"
+    },
+    localIntroduction: "Based directly in Havering, Greater London Pest Control provides premier, BPCA-accredited structural extermination and proofing throughout Romford and surrounding areas. Our local Romford field depot allows us to react to urgent calls with rapid same-day response times.",
+    localPestObservations: "Romford suffers from seasonal pest trends including suburban grey squirrels, summer wasps, and high-pressure sewer rat infestations. Our drainage camera surveys pinpoint sewer junctions where rats escape into residential floor voids.",
+    propertyConsiderations: "Residential houses in Romford, particularly Victorian terrace rows, share floor and loft voids. Successful eradication requires thorough sealing of shared utility entry points and external brick air vents.",
+    commercialConsiderations: "Commercial businesses near Romford Town Centre and the Brewery Shopping Centre maintain high hygiene standards under the Food Safety Act using our routine commercial contracts.",
+    technicianNotes: "Our local Romford depot is highly active. Scheduling early morning slots ensures rapid access before peak high street traffic.",
+    parkingAndAccessNotes: "Parking is readily available, but local resident-only zones require visitor permits which our technicians handle automatically.",
+    nearbyAreas: ["gidea-park", "hornchurch", "collier-row"],
+    faqs: [
+      {
+        question: "Do you offer rat proofing guarantees in Romford?",
+        answer: "Yes, all professional structural proofing works carry up to a 20-year exclusion warranty."
       }
     ]
   }

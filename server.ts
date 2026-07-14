@@ -39,6 +39,23 @@ async function startServer() {
   ];
 
   app.use((req, res, next) => {
+    const pathLower = req.path.toLowerCase();
+    
+    // Dynamic legacy redirects to clean /areas/ structures
+    if (pathLower.startsWith('/boroughs/')) {
+      const slug = req.path.substring('/boroughs/'.length);
+      return res.redirect(301, `/areas/${slug}`);
+    }
+    if (pathLower.startsWith('/locations/')) {
+      const slug = req.path.substring('/locations/'.length).toLowerCase();
+      const loc = locationsList.find(l => l.slug.toLowerCase() === slug);
+      if (loc) {
+        return res.redirect(301, `/areas/${loc.boroughSlug}/${loc.slug}`);
+      } else {
+        return res.redirect(301, `/areas`);
+      }
+    }
+
     const match = redirects.find(r => r.source.toLowerCase() === req.path.toLowerCase());
     if (match) {
       console.log(`[301 Redirect] ${req.path} -> ${match.destination}`);
@@ -117,14 +134,14 @@ ${urls.map(url => `  <url>
   app.get("/sitemap-boroughs.xml", (req, res) => {
     const urls = boroughsList
       .filter(b => b.isServed)
-      .map(b => `https://${DOMAIN}/boroughs/${b.slug}`);
+      .map(b => `https://${DOMAIN}/areas/${b.slug}`);
     res.type("application/xml").send(buildSitemapXml(urls));
   });
 
   app.get("/sitemap-areas.xml", (req, res) => {
     const urls = locationsList
       .filter(l => l.isServed && l.editorialQuality.indexable && l.editorialQuality.publicationStatus === "published")
-      .map(l => `https://${DOMAIN}/areas/${l.slug}`);
+      .map(l => `https://${DOMAIN}/areas/${l.boroughSlug}/${l.slug}`);
     res.type("application/xml").send(buildSitemapXml(urls));
   });
 
@@ -136,7 +153,11 @@ ${urls.map(url => `  <url>
         return details.isIndexable && details.status === 'published';
       })
       .map(p => `https://${DOMAIN}/postcodes/${p.outwardCode.toLowerCase()}`);
-    res.type("application/xml").send(buildSitemapXml(urls));
+
+    const prefixes = Array.from(new Set(postcodesList.map(p => p.postcodePrefix.toLowerCase())));
+    const prefixUrls = prefixes.map(prefix => `https://${DOMAIN}/postcodes/${prefix}`);
+
+    res.type("application/xml").send(buildSitemapXml([...prefixUrls, ...urls]));
   });
 
   app.get("/sitemap-advice.xml", (req, res) => {
